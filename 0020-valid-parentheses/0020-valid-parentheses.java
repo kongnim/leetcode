@@ -21,9 +21,12 @@ class Solution {
                         stack.pop();
                     } else {
                         stack.push(chr);
-                    }   
+                    }
+                    break;
+
                 } else if (array[j][0] == chr) {
                     stack.push(chr);
+                    break;
                 }
             }
         }
