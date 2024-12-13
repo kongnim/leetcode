@@ -3,7 +3,7 @@ class Solution {
         Stack<Character> stack = new Stack<>();
         
         for (int i = 0; i < s.length(); i++) {
-            Character inputOne = Character.valueOf(s.charAt(i));
+            char inputOne = s.charAt(i);
             
             if (stack.empty()
                 || inputOne == '(' || inputOne == '[' || inputOne == '{') {
@@ -11,9 +11,7 @@ class Solution {
                 continue;
             }
 
-            Character lastOne = stack.peek();
-            
-            if (match(inputOne, lastOne)) {
+            if (match(inputOne, stack.peek())) {
                 stack.pop();
             } else {
                 stack.push(inputOne);
@@ -23,7 +21,7 @@ class Solution {
         return stack.empty();
     }
 
-    private boolean match(Character inputOne, Character lastOne) {
+    private boolean match(char inputOne, char lastOne) {
         return (lastOne == '(' && inputOne == ')')
                 || (lastOne == '[' && inputOne == ']')
                 || (lastOne == '{' && inputOne == '}');
