@@ -1,36 +1,31 @@
 class Solution {
-    public static final Character[][] array = {
-        {'(', ')'}, {'[', ']'}, {'{', '}'}
-    };
-
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         
         for (int i = 0; i < s.length(); i++) {
-            Character chr = Character.valueOf(s.charAt(i));
+            Character inputOne = Character.valueOf(s.charAt(i));
             
-            if (stack.empty()) {
-                stack.push(chr);
+            if (stack.empty()
+                || inputOne == '(' || inputOne == '[' || inputOne == '{') {
+                stack.push(inputOne);
                 continue;
             }
 
             Character lastOne = stack.peek();
-            for (int j = 0; j < array.length; j++) {
-                if (array[j][1] == chr) {
-                    if (array[j][0] == lastOne) {
-                        stack.pop();
-                    } else {
-                        stack.push(chr);
-                    }
-                    break;
-
-                } else if (array[j][0] == chr) {
-                    stack.push(chr);
-                    break;
-                }
+            
+            if (match(inputOne, lastOne)) {
+                stack.pop();
+            } else {
+                stack.push(inputOne);
             }
         }
 
         return stack.empty();
+    }
+
+    private boolean match(Character inputOne, Character lastOne) {
+        return (lastOne == '(' && inputOne == ')')
+                || (lastOne == '[' && inputOne == ']')
+                || (lastOne == '{' && inputOne == '}');
     }
 }
