@@ -1,18 +1,31 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> wordDictSet = new HashSet<>(wordDict);
-        
-        boolean[] memo = new boolean[s.length() + 1];
-        memo[0] = true;
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
 
-        for (int j = 1; j <= s.length(); j++) {
-            for (int i = 0; i < j; i++) {
-                if (memo[i] && wordDictSet.contains(s.substring(i, j))) {
-                    memo[j] = true;
-                    break;
-                }
+        queue.add(0);
+
+        while (queue.isEmpty() == false) {
+            int start = queue.poll();
+
+            if (start == s.length()) {
+                return true;
             }
+
+            if (visited.contains(start)) {
+                continue;
+            }
+            
+            visited.add(start);
+            
+            for (int end = start + 1; end <= s.length(); end++) {
+                if (wordDictSet.contains(s.substring(start, end))) {
+                    queue.add(end);
+                }
+            }            
         }
-        return memo[s.length()];
+
+        return false;
     }
 }
